@@ -8,7 +8,7 @@ import { Toaster } from 'react-hot-toast'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [currentUser, loading, error] = useAuthState(auth)
-  return currentUser ? (
+  return !currentUser ? (
     <>
       <Toaster />
       <Login />

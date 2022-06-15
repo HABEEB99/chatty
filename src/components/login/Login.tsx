@@ -10,11 +10,15 @@ import toast from 'react-hot-toast'
 
 type LoginProps = {}
 
+// type handleLoginProps = {
+//   firstParams: string
+// }
+
 const Login: React.FC<LoginProps> = () => {
-  const [loginWithGoogle, user, loading, error] = useSignInWithGoogle(auth)
+  const [signInWithGoogle, user, loading, err] = useSignInWithGoogle(auth)
 
   const handleLogin = () => {
-    if (error) {
+    if (err) {
       return toast.error('Network Error', {
         position: 'top-center',
         duration: 4000,
@@ -23,7 +27,7 @@ const Login: React.FC<LoginProps> = () => {
         },
       })
     } else {
-      loginWithGoogle()
+      signInWithGoogle('', { prompt: 'select_account' })
       return toast.success('You Signed-in Successfully', {
         position: 'top-center',
         duration: 2000,
@@ -33,6 +37,7 @@ const Login: React.FC<LoginProps> = () => {
       })
     }
   }
+
   return (
     <div className="h-screen w-screen bg-body">
       <main className="flex h-[95vh] w-full items-center justify-center">
@@ -46,13 +51,15 @@ const Login: React.FC<LoginProps> = () => {
           <span className="text-lg text-sidebar">
             Login to connect with your friends
           </span>
-          <button className="group flex h-12 w-[18rem] items-center justify-center rounded-full bg-btn font-bold text-white hover:bg-cta">
-            <FcGoogle
-              onClick={handleLogin}
-              className="mr-2 font-bold group-hover:animate-spin"
-            />
+          <button
+            onClick={handleLogin}
+            className="group flex h-12 w-[18rem] items-center justify-center rounded-full bg-btn font-bold text-white hover:bg-cta"
+          >
+            <FcGoogle className="mr-2 font-bold group-hover:animate-spin" />
             Login With Google
-            {loading && <BiLoaderCircle />}
+            {loading && (
+              <BiLoaderCircle className="ml-2 animate-spin font-bold text-white" />
+            )}
           </button>
         </div>
       </main>
